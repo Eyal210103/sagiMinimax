@@ -21,12 +21,10 @@ public class Ai {
                     toCheckOn.playTurn(i, j);
                     int score = minimax(toCheckOn, Integer.MAX_VALUE, false);
                     toCheckOn.getLines()[i].addNumOfMaklot(j);
-                    System.out.println("to try" + moveToTry +" " + score);
                     if (bestScore <= score) {
                         bestScore = score;
                         move.amount = moveToTry.amount;
                         move.row = moveToTry.row;
-                        System.out.println("better       " + move + " " + score);
                     }
                 }
             }
@@ -35,9 +33,9 @@ public class Ai {
     }
 
     public int minimax(GameManager gameManager, int depth, boolean isMaximizing) {
-        if (gameManager.isGameOver() && gameManager.getTurn() == 0) {
+        if (gameManager.getWinner().equals("ai")) {
             return depth;
-        } else if (gameManager.isGameOver() && gameManager.getTurn() == 1) {
+        } else if (gameManager.getWinner().equals("player")) {
             return -1*depth;
         }
 

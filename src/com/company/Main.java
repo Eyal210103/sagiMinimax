@@ -5,14 +5,14 @@ import java.util.Scanner;
 public class Main {
 
     public static void main(String[] args) {
-        GameManager gm = new GameManager(4);
+        GameManager gm = new GameManager(5);
         gm.print();
         Ai ai = new Ai(gm);
         Ai ai2 = new Ai(gm);
 
         Scanner sc = new Scanner(System.in);
 
-        while (!gm.isWon()) {
+        while (gm.getWinner().equals("none")) {
             if (gm.getTurn() == 0) {
                 System.out.println("AI");
                 Move move = ai.playTurn();
@@ -32,6 +32,6 @@ public class Main {
             System.out.println("\n");
 
         }
-        System.out.println("Winner");
+        System.out.println("Winner " + gm.getWinner());
     }
 }

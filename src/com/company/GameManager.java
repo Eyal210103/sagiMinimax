@@ -6,7 +6,6 @@ import java.util.*;
 public class GameManager {
     private Maklot[] lines;
     private int turn; //0- p1 1 -p2
-    private boolean gameOver;
     private boolean hasStarted;
     // turns
     //impl who wins
@@ -21,8 +20,7 @@ public class GameManager {
         }
 
         Random rand = new Random();
-        this.turn = 0;//rand.nextInt(2);
-        this.gameOver = false;
+        this.turn = rand.nextInt(2);
         this.hasStarted = false;
     }
 
@@ -32,7 +30,6 @@ public class GameManager {
             this.lines[i] = new Maklot(other.lines[i].getAmount());
         }
         this.turn = other.turn;
-        this.gameOver = other.gameOver;
         this.hasStarted = other.hasStarted;
     }
 
@@ -47,10 +44,7 @@ public class GameManager {
             return false;
         }
 
-        if (isWon()) {
-            this.gameOver = true;
-            return  true;
-        } else {
+        if (getWinner().equals("none")) {
             if (this.turn == 0) {
                 this.turn = 1;
             } else {
@@ -62,46 +56,22 @@ public class GameManager {
 
     }
 
-    public boolean isWon() {
+    public String getWinner() {
         int count = 0;
         for (int i = 0; i < lines.length; i++) {
             if (!lines[i].isGotOne() && !lines[i].isEmpty())
-                return false;
+                return "none";
             if (lines[i].isGotOne())
                 count++;
         }
-        return count == 1;
+        if (count == 1) {
+            return turn == 0 ? "ai" : "player";
+        }
+        return "none";
     }
-
 
     public int getTurn() {
         return turn;
-    }
-
-
-    public void setTurn(int turn) {
-        this.turn = turn;
-    }
-
-
-    public boolean isGameOver() {
-        return gameOver;
-    }
-
-    public boolean HasStarted() {
-        return hasStarted;
-    }
-
-    public void setGameOver(boolean gameOver) {
-        this.gameOver = gameOver;
-    }
-
-    public int getAmountOfLines() {
-        return lines.length;
-    }
-
-    public int getAmountOfMaklotInLine(int row) {
-        return lines[row].getAmount();
     }
 
     // public int getAmountOfMaklotLeftInLine(int row){return lines[row].getLeftAmount();}
