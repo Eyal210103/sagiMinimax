@@ -6,7 +6,6 @@ import java.util.*;
 public class GameManager {
     private final ArrayList<Integer> lines;
     private int turn; //0- p1 1 -p2
-    private boolean iGameOver;
 
     public GameManager(int lines) {
         int numOfMaklot = 1; // reset lines in pyramid shape
@@ -47,21 +46,6 @@ public class GameManager {
     public void addNumToLine(int line,int amount){
         lines.set(line,lines.get(line)+amount);
     }
-//    public String getWinner() {
-//        if (isGameOver)
-//            return turn == 0 ? "ai" : "player";
-//        int count = 0;
-//        for (Integer line : lines) {
-//            if (line == 0)
-//                return "none";
-//            count++;
-//        }
-//        if (count == lines.size()-1) {
-//            isGameOver = true;
-//            return turn == 0 ? "ai" : "player";
-//        }
-//        return "none";
-//    }
 
     public String getWinner() {
         int count = 0;
@@ -78,12 +62,11 @@ public class GameManager {
     }
 
     public boolean isLegalBoard(){
-        int countEmpty =0;
+        int sum =0;
         for (Integer i:lines) {
-            if (i==0)
-                countEmpty++;
+            sum+=i;
         }
-        return countEmpty == lines.size()-1;
+        return sum != 0;
     }
 
     public int getTurn() {
@@ -94,9 +77,6 @@ public class GameManager {
         return lines;
     }
 
-    public void setTurn(int turn) {
-        this.turn = turn;
-    }
 
     public void print() {
         for (int i = 0; i < lines.size(); i++) {
