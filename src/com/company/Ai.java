@@ -9,7 +9,7 @@ public class Ai {
     public Ai() {
     }
 
-    ArrayList<ArrayList<String>> boards = new ArrayList<>();
+  //  ArrayList<ArrayList<String>> boards = new ArrayList<>();
 
     public Move playTurn(GameManager gameManager) {
         Move move = new Move(1, 1);
