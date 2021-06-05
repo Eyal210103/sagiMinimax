@@ -9,7 +9,6 @@ public class Main {
         gm.print();
         Ai ai = new Ai();
 
-
         Scanner sc = new Scanner(System.in);
 
         while (gm.getWinner().equals("none")) {
