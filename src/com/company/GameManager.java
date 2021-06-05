@@ -4,42 +4,30 @@ package com.company;
 import java.util.*;
 
 public class GameManager {
-    private Maklot[] lines;
+    private final ArrayList<Integer> lines;
     private int turn; //0- p1 1 -p2
-    private boolean hasStarted;
-    // turns
-    //impl who wins
-
+    private boolean iGameOver;
 
     public GameManager(int lines) {
         int numOfMaklot = 1; // reset lines in pyramid shape
-        this.lines = new Maklot[lines];
+        this.lines = new ArrayList<Integer>();
         for (int i = 0; i < lines; i++) {
-            this.lines[i] = new Maklot(numOfMaklot);
+            this.lines.add(numOfMaklot);
             numOfMaklot += 2;
         }
-
         Random rand = new Random();
         this.turn = rand.nextInt(2);
-        this.hasStarted = false;
     }
 
     public GameManager(GameManager other) {
-        this.lines = new Maklot[other.lines.length];
-        for (int i = 0; i < other.lines.length; i++) {
-            this.lines[i] = new Maklot(other.lines[i].getAmount());
-        }
+        this.lines = new ArrayList<Integer>();
+        this.lines.addAll(other.lines);
         this.turn = other.turn;
-        this.hasStarted = other.hasStarted;
     }
 
     public boolean playTurn(int selectedRow, int amount) {
-        if (!hasStarted) {
-            hasStarted = true;
-        }
-        if (this.lines[selectedRow].isEnough(amount)) {
-            this.lines[selectedRow].removeNumOfMaklot(amount);
-
+        if (this.lines.get(selectedRow) >= amount) {
+            this.lines.set(selectedRow,this.lines.get(selectedRow)-amount);
         } else {
             return false;
         }
@@ -56,12 +44,31 @@ public class GameManager {
 
     }
 
+    public void addNumToLine(int line,int amount){
+        lines.set(line,lines.get(line)+amount);
+    }
+//    public String getWinner() {
+//        if (isGameOver)
+//            return turn == 0 ? "ai" : "player";
+//        int count = 0;
+//        for (Integer line : lines) {
+//            if (line == 0)
+//                return "none";
+//            count++;
+//        }
+//        if (count == lines.size()-1) {
+//            isGameOver = true;
+//            return turn == 0 ? "ai" : "player";
+//        }
+//        return "none";
+//    }
+
     public String getWinner() {
         int count = 0;
-        for (int i = 0; i < lines.length; i++) {
-            if (!lines[i].isGotOne() && !lines[i].isEmpty())
+        for (int i = 0; i < lines.size(); i++) {
+            if (!(lines.get(i) == 1) && !(lines.get(i) == 0))
                 return "none";
-            if (lines[i].isGotOne())
+            if (lines.get(i) == 1)
                 count++;
         }
         if (count == 1) {
@@ -70,26 +77,46 @@ public class GameManager {
         return "none";
     }
 
+    public boolean isLegalBoard(){
+        int countEmpty =0;
+        for (Integer i:lines) {
+            if (i==0)
+                countEmpty++;
+        }
+        return countEmpty == lines.size()-1;
+    }
+
     public int getTurn() {
         return turn;
     }
 
-    // public int getAmountOfMaklotLeftInLine(int row){return lines[row].getLeftAmount();}
-
-    public Maklot[] getLines() {
+    public ArrayList<Integer> getLines() {
         return lines;
     }
 
+    public void setTurn(int turn) {
+        this.turn = turn;
+    }
+
     public void print() {
-        for (int i = 0; i < lines.length; i++) {
-            Maklot m = lines[i];
+        for (int i = 0; i < lines.size(); i++) {
+            Integer m = lines.get(i);
             System.out.print(i + 1 + "  ");
-            for (int j = 0; j < m.getAmount(); j++) {
-                if (m.isThere(j)) {
-                    System.out.print("X");
-                }
+            for (int j = 0; j < m; j++) {
+                System.out.print("X");
             }
             System.out.println();
         }
+    }
+
+    public String getBoardGraphics(){
+        StringBuilder output= new StringBuilder();
+        for (int i = 0; i < lines.size(); i++) {
+            Integer m = lines.get(i);
+            output.append(i+1).append("  ");
+            output.append("X".repeat(Math.max(0, m)));
+            output.append("\n");
+        }
+        return output.toString();
     }
 }

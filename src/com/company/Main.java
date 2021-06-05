@@ -5,17 +5,17 @@ import java.util.Scanner;
 public class Main {
 
     public static void main(String[] args) {
-        GameManager gm = new GameManager(5);
+        GameManager gm = new GameManager(4);
         gm.print();
-        Ai ai = new Ai(gm);
-        Ai ai2 = new Ai(gm);
+        Ai ai = new Ai();
+
 
         Scanner sc = new Scanner(System.in);
 
         while (gm.getWinner().equals("none")) {
             if (gm.getTurn() == 0) {
                 System.out.println("AI");
-                Move move = ai.playTurn();
+                Move move = ai.playTurn(gm);
                 gm.playTurn(move.row,move.amount);
             } else {
                 System.out.println("player " + (gm.getTurn() + 1) + " its your turn");
