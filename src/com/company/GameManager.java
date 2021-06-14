@@ -76,17 +76,4 @@ public class GameManager {
     public ArrayList<Integer> getLines() {
         return lines;
     }
-
-
-    public void print() {
-        for (int i = 0; i < lines.size(); i++) {
-            Integer m = lines.get(i);
-            System.out.print(i + 1 + "  ");
-            for (int j = 0; j < m; j++) {
-                System.out.print("X");
-            }
-            System.out.println();
-        }
-    }
-
 }
