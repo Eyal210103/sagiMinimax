@@ -89,14 +89,4 @@ public class GameManager {
         }
     }
 
-    public String getBoardGraphics(){
-        StringBuilder output= new StringBuilder();
-        for (int i = 0; i < lines.size(); i++) {
-            Integer m = lines.get(i);
-            output.append(i+1).append("  ");
-            output.append("X".repeat(Math.max(0, m)));
-            output.append("\n");
-        }
-        return output.toString();
-    }
 }
